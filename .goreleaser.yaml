@@ -1,0 +1,43 @@
+project_name: ghal
+builds:
+  - env:
+      - CGO_ENABLED=0
+    main: ./cmd
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - arm64
+      - amd64
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+nfpms:
+  - vendor: ghal
+    maintainer: Aidan Steele <aidan.steele@glassechidna.com.au>
+    homepage: https://github.com/aidansteele/ghal
+    description: ghal allows streaming of live GitHub Actions build logs to your terminal
+    formats:
+      - deb
+brews:
+  - tap:
+      owner: aidansteele
+      name: homebrew-taps
+    commit_author:
+      name: Aidan Steele
+      email: aidan.steele@glassechidna.com.au
+    homepage: https://github.com/aidansteele/ghal
+    description: ghal allows streaming of live GitHub Actions build logs to your terminal
